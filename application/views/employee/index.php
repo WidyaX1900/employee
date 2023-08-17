@@ -11,27 +11,30 @@
         <tr>
             <th scope="col">No</th>
             <th scope="col">Name</th>
-            <th scope="col">Division</th>
+            <th scope="col">E-mail</th>
             <th scope="col">Action</th>
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td colspan="2">Larry the Bird</td>
-            <td>@twitter</td>
-        </tr>
+        <?php $i = 1; ?>
+        <?php foreach ($employees as $employee) : ?>
+            <tr>
+                <th scope="row"><?= $i; ?></th>
+                <td><?= $employee->name; ?></td>
+                <td><?= $employee->email; ?></td>
+                <td>
+                    <a href="#" class="btn btn-primary btn-sm">
+                        Detail
+                    </a>
+                    <a href="#" class="btn btn-warning btn-sm">
+                        Edit
+                    </a>
+                    <a href="#" class="btn btn-danger btn-sm">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+            <?php $i++; ?>
+        <?php endforeach; ?>
     </tbody>
 </table>

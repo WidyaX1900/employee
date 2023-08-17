@@ -7,12 +7,21 @@
     </div>
     <div class="collapse navbar-collapse px-4" id="navbarNav">
         <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="<?= base_url(); ?>">Home</a>
-            </li>
-            <li class="nav-item mx-3">
-                <a class="nav-link" href="<?= base_url(); ?>worker/">Employees</a>
-            </li>
+            <?php if ($page === 'Employee') : ?>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="<?= base_url(); ?>">Home</a>
+                </li>
+                <li class="nav-item mx-3">
+                    <a class="nav-link active" href="<?= base_url(); ?>worker/">Employees</a>
+                </li>
+            <?php else : ?>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="<?= base_url(); ?>">Home</a>
+                </li>
+                <li class="nav-item mx-3">
+                    <a class="nav-link" href="<?= base_url(); ?>worker/">Employees</a>
+                </li>
+            <?php endif; ?>
         </ul>
     </div>
 </nav>
