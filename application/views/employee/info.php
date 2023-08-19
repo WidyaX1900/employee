@@ -1,7 +1,11 @@
 <div class="row mt-5">
     <div class="col-4">
         <div class="profile-image">
-            <img src="<?= base_url('assets/'); ?>img/<?= $employees[0]->picture; ?>" alt="default image" width="300px">
+            <?php if ($employees[0]->picture !== 'default.png') : ?>
+                <img src="<?= base_url('assets/'); ?>profile/<?= $employees[0]->picture; ?>" alt="profile image" width="300px">
+            <?php else : ?>
+                <img src="<?= base_url('assets/'); ?>img/default.png" alt="default image" width="300px">
+            <?php endif; ?>
         </div>
     </div>
     <div class="col-8 mt-5">

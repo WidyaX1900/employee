@@ -61,7 +61,7 @@ class Worker extends CI_Controller
 
         $this->form_validation->set_rules($config);
 
-        if ($this->form_validation->run() === false) {
+        if (!$this->form_validation->run()) {
             $this->create();
         } else {
 
@@ -69,7 +69,7 @@ class Worker extends CI_Controller
                 'name' => htmlspecialchars($this->input->post('name')),
                 'email' => htmlspecialchars($this->input->post('email')),
                 'phone' => htmlspecialchars($this->input->post('phone')),
-                'picture' => 'default.png'
+                'picture' => $this->upload()
             ];
 
             $this->employee_model->insertEmployee($data);
@@ -110,6 +110,12 @@ class Worker extends CI_Controller
 
     public function update($id)
     {
+        if ($_FILES['photo']['error'] > 0) {
+            $newFile = $this->input->post('oldPicture');
+        } else {
+            $newFile = $this->upload();
+        }
+
         $config =
             [
                 [
@@ -150,7 +156,7 @@ class Worker extends CI_Controller
                 'name' => htmlspecialchars($this->input->post('name')),
                 'email' => htmlspecialchars($this->input->post('email')),
                 'phone' => htmlspecialchars($this->input->post('phone')),
-                'picture' => 'default.png'
+                'picture' => $newFile
             ];
 
             $this->employee_model->updateEmployee($id, $data);
@@ -183,5 +189,30 @@ class Worker extends CI_Controller
         $this->session->set_flashdata('result', 'Successful');
         $this->session->set_flashdata('action', 'Delete an Employee');
         return redirect('/worker');
+    }
+
+    public function upload()
+    {
+        $fileName = 'default.png';
+
+        $config['upload_path'] = './assets/profile/';
+        $config['allowed_types'] = 'jpg|png|jpeg';
+        $config['encrypt_name'] = true;
+        $config['file_ext_tolower'] = true;
+
+        $this->upload->initialize($config);
+
+        if ($this->upload->do_upload('photo')) {
+            $fileName = $this->upload->data('file_name');
+        } else {
+            $data['error'] = $this->upload->display_errors();
+            $data['title'] = 'Error Page';
+
+            $this->load->view('templates/header', $data);
+            $this->load->view('errors/error', $data);
+            $this->load->view('templates/footer');
+        }
+
+        return $fileName;
     }
 }
